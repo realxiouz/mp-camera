@@ -30,8 +30,9 @@
     </div>
     <div class="flex flex-wrap">
       <div class="item bg-white" v-for="(i, inx) in list" :key="inx" style="margin: 10rpx 0 0 10rpx;width: 360rpx;" @click="onDetail(i)">
-        <div style="height:480rpx">
-          <img :src="i.image" style="width:100%;height:100%" class="radius" />
+        <div style="height:480rpx;position:relative;">
+          <img :src="i.image" style="width:100%;height:100%" class="radius" mode="aspectFill"/>
+          <div class="cu-tag sm radius bg-blue" style="position: absolute;top:10rpx;left:10rpx;">{{`${getDelta(i)}s`}}</div>
         </div>
         <div class="padding-xs">
           <div class="margin-bottom-sm">{{i.create_time_text}}</div>
@@ -178,17 +179,56 @@ export default {
     },
     onVideo() {
       if (this.isVideoing) {
-        this.end_time = DateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss')
-        this.$post(`/api/v1/video/add`, {
-          start_time: this.start_time,
-          end_time: this.end_time
-        }).then(r => {
-            this.isVideoing = false
-            this.start_time = ''
-            this.end_time = ''
-            this.t && clearInterval(this.t)
-            this.getData(true)
-          })
+        this.livePlayerContext.snapshot('raw')
+        .then(data =>{
+          if (data) {
+            wx.uploadFile({
+              url: `https://oath.softtiny.com/api/v1/common/upload`,
+              filePath: data.tempImagePath,
+              name: 'file',
+              header: {
+                token: wx.getStorageSync('token')
+              },
+              success: r => {
+                console.log(r)
+                if (r.statusCode == 200 && r.errMsg == 'uploadFile:ok') {
+                  let d = JSON.parse(r.data)
+                  console.log(d.data.url)
+
+                  this.end_time = DateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss')
+                  this.$post(`/api/v1/video/add`, {
+                    start_time: this.start_time,
+                    end_time: this.end_time,
+                    image: d.data.url
+                  }).then(r => {
+                      this.isVideoing = false
+                      this.start_time = ''
+                      this.end_time = ''
+                      this.t && clearInterval(this.t)
+                      this.getData(true)
+                    })
+                }
+              },
+              fail: e => {
+                console.log(e)
+              }
+            })
+          }
+        })
+        .catch(err => {
+          console.log("err",err);
+        })
+        // this.end_time = DateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss')
+        // this.$post(`/api/v1/video/add`, {
+        //   start_time: this.start_time,
+        //   end_time: this.end_time
+        // }).then(r => {
+        //     this.isVideoing = false
+        //     this.start_time = ''
+        //     this.end_time = ''
+        //     this.t && clearInterval(this.t)
+        //     this.getData(true)
+        //   })
       } else {
         if (this.videoLoadingStatus != 100) {
           this.$toast('摄像头加载中,请稍后')
@@ -216,6 +256,9 @@ export default {
           this.$toast('播放失败')
         }
       })
+    },
+    getDelta(i) {
+      return (new Date(i.end_time).valueOf() - new Date(i.start_time).valueOf())/1000
     }
   },
   onReachBottom() {

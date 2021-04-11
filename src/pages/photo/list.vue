@@ -34,9 +34,10 @@
     </div>
     <div class="flex flex-wrap">
       <div class="item bg-white" v-for="(i, inx) in list" :key="inx" style="margin: 10rpx 0 0 10rpx;width: 360rpx;">
-        <div style="height:360rpx">
+        <div style="height:360rpx;">
           <img :src="i.image" style="width:100%;height:100%" class="radius" mode="aspectFill" @click="onPreview(i.image)"/>
         </div>
+        
         <!-- <div class="padding-xs">
           <div class="margin-bottom-sm">{{i.create_time_text}}</div>
           <div class="flex align-center">
@@ -251,7 +252,8 @@ export default {
           this.$toast('播放失败')
         }
       })
-    }
+    },
+    
   },
   onReachBottom() {
     if (!this.isLoading && !this.isEnd) {

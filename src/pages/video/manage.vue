@@ -1,8 +1,9 @@
 <template>
   <div class="flex flex-wrap">
     <div class="bg-white" v-for="(i,inx) in list" :key="inx" style="margin: 10rpx 0 0 10rpx;width: 360rpx;">
-      <div style="height:480rpx">
+      <div style="height:480rpx;position:relative;">
           <img :src="i.image" style="width:100%;height:100%" class="radius" mode="aspectFill"/>
+          <div class="cu-tag sm radius bg-blue" style="position: absolute;top:10rpx;left:10rpx;">{{`${getDelta(i)}s`}}</div>
         </div>
         <div class="padding-xs">
           <div class="margin-bottom-sm">{{i.create_time_text}}</div>
@@ -61,6 +62,9 @@ export default {
             })
         }
       })
+    },
+    getDelta(i) {
+      return (new Date(i.end_time).valueOf() - new Date(i.start_time).valueOf())/1000
     }
   },
   onReachBottom() {
