@@ -1,0 +1,24 @@
+<!-- <cover-view class="tab-bar">
+  <cover-view class="tab-bar-border"></cover-view>
+  <cover-view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+    <cover-image src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></cover-image>
+    <cover-view style="color: {{selected === index ? selectedColor : color}}">{{item.text}}</cover-view>
+  </cover-view>
+</cover-view> -->
+
+<view class="cu-bar tabbar bg-white foot" style="background:#fff;">
+  <view class="action {{selInx==0?'text-green':'text-gray'}}" data-index="{{0}}" data-path="/pages/home/index" bindtap="switchTab">
+    <view class="cuIcon-homefill"></view>
+    首页
+  </view>
+  <view class="action add-action {{selInx==1?'text-green':'text-gray'}}" data-index="{{1}}" data-path="/pages/location/index" bindtap="switchTab">
+    <button class="cu-btn cuIcon-location shadow {{selInx==1?'bg-green':'bg-gray'}}"></button>
+    打卡
+  </view>
+  <view class="action {{selInx==2?'text-green':'text-gray'}}" data-index="{{2}}" data-path="/pages/me/index" bindtap="switchTab">
+    <view class="cuIcon-my">
+      <view class="cu-tag badge"></view>
+    </view>
+    个人中心
+  </view>
+</view>
