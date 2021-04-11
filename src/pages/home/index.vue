@@ -94,7 +94,10 @@ export default {
     getData() {
       this.$showLoading()
       this.isLoading = true
-      this.$get(`/api/v1/index`)
+      let d = {
+        page: this.page
+      }
+      this.$get(`/api/v1/index`, d)
         .then(r => {
           this.banner = r.data.bannerList
           this.list.push(...r.data.list.data)
