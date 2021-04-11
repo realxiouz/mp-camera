@@ -44,8 +44,9 @@ export default {
         }
         this.$post('api/v1/user/wxMiniProgramLogin', d)
           .then(r => {
-            let { token, } = r.data
+            let { token, group_id} = r.data
             this.$setStorage('token', token)
+            this.$setStorage('gId', group_id)
             this.$store.commit('user/setToken', token)
             this.$go(1, 'back')
           })

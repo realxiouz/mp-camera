@@ -94,6 +94,22 @@
 					<view class="panel-name">{{item.name}}</view>
 				</view>
 			</view>
+			<view>
+				<view class="panel-item" catchtap="goVideo">
+					<view class="panel-imgage-container">
+						<image class="panel-image" src="./images/live_icon_play_full.png"></image>
+					</view>
+					<view class="panel-name">视频管理</view>
+				</view>
+			</view>
+			<view>
+				<view class="panel-item" catchtap="goPhoto">
+					<view class="panel-imgage-container">
+						<image class="panel-image" src="./images/live_icon_adapt_full.png"></image>
+					</view>
+					<view class="panel-name">图片管理</view>
+				</view>
+			</view>
 		</view>
 	</view>
 	<view hidden="{{panelStatus !== 1}}" class="ptz-container">

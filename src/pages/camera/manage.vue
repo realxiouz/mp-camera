@@ -160,7 +160,7 @@ export default {
   data() {
     return {
       scene: 1001,
-      accessToken: 'at.636lcmeydffjpzpp4l18tmzo3dohd1r1-1vx85nijgr-0t0617d-mdxli89ci',
+      accessToken: 'at.59l4nssa0rnepbf1d4u2e750e0gh7oyl-9rhzd1qlv6-1s0hzdd-ehw1v9vcd',
       deviceSerial: 'F72584666',
       channelNo: '1',
       list: [

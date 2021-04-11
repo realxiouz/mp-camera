@@ -148,7 +148,7 @@ Page({
   },
   onLoad(query){
     var launchOptions = wx.getLaunchOptionsSync();
-    const { accessToken = 'at.636lcmeydffjpzpp4l18tmzo3dohd1r1-1vx85nijgr-0t0617d-mdxli89ci', deviceSerial = 'F72584666',channelNo = 1,scene } = query;
+    const { accessToken = 'at.59l4nssa0rnepbf1d4u2e750e0gh7oyl-9rhzd1qlv6-1s0hzdd-ehw1v9vcd', deviceSerial = 'F72584666',channelNo = 1,scene } = query;
     console.log("scene",scene)
     this.setData({
       scene: parseInt(scene,10) || launchOptions.scene,
@@ -1636,4 +1636,14 @@ authConfirm(){
       url: url,
     })
   },
+  goVideo() {
+    wx.navigateTo({
+      url: `/pages/video/manage`,
+    })
+  },
+  goPhoto() {
+    wx.navigateTo({
+      url: `/pages/photo/manage`,
+    })
+  }
 })

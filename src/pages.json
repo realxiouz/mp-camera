@@ -36,9 +36,21 @@
 			}
 		},
 		{
+			"path": "pages/photo/manage",
+			"style": {
+				"navigationBarTitleText": "图片管理"
+			}
+		},
+		{
 			"path": "pages/video/list",
 			"style": {
 				"navigationBarTitleText": "视频列表"
+			}
+		},
+		{
+			"path": "pages/video/manage",
+			"style": {
+				"navigationBarTitleText": "视频管理"
 			}
 		},
 		{

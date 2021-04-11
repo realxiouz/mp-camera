@@ -36,12 +36,7 @@ export default {
     this.getData()
   },
   onShow() {
-    const page = this.$mp.page
-    if (typeof page.getTabBar === 'function' &&  page.getTabBar()) {  
-      page.getTabBar().setData({  
-          selInx: 0  
-      })  
-    }
+    this.gId = this.$getStorage('gId')
   },
   data() {
     return {
@@ -78,7 +73,8 @@ export default {
 					color: 'cyan',
 					badge: 0,
 					name: '管理中心',
-          path: `/pages/live/live`
+          path: `/pages/live/live`,
+          needAdmin: true,
 				},
         {
 					cuIcon: 'favorfill',
@@ -111,7 +107,7 @@ export default {
         })
     },
     onPath(i) {
-      if (!this.token) {
+      if (!this.token || !this.gId) {
         this.$showModal({
           content: '您还未登录,无法使用该功能,点击确定去登录~~~',
           successCb: _ => {
@@ -120,10 +116,14 @@ export default {
         })
         return
       }
+      if (i.needAdmin && this.gId == 1) {
+        this.$toast('您暂无权限访问该页面')
+        return
+      }
       if (i.path) {
         this.$go(i.path)
       } else {
-        this.$toast('接口...')
+        this.$toast('开发中...')
       }
     }
   },
