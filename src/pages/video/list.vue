@@ -179,6 +179,24 @@ export default {
     },
     onVideo() {
       if (this.isVideoing) {
+        this.end_time = DateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss')
+        this.$post(`/api/v1/video/add`, {
+          start_time: this.start_time,
+          end_time: this.end_time,
+          image: this.image
+        }).then(r => {
+            this.isVideoing = false
+            this.start_time = ''
+            this.end_time = ''
+            this.t && clearInterval(this.t)
+            this.getData(true)
+          })
+      } else {
+        if (this.videoLoadingStatus != 100) {
+          this.$toast('摄像头加载中,请稍后')
+          return
+        }
+
         this.livePlayerContext.snapshot('raw')
         .then(data =>{
           if (data) {
@@ -194,19 +212,7 @@ export default {
                 if (r.statusCode == 200 && r.errMsg == 'uploadFile:ok') {
                   let d = JSON.parse(r.data)
                   console.log(d.data.url)
-
-                  this.end_time = DateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss')
-                  this.$post(`/api/v1/video/add`, {
-                    start_time: this.start_time,
-                    end_time: this.end_time,
-                    image: d.data.url
-                  }).then(r => {
-                      this.isVideoing = false
-                      this.start_time = ''
-                      this.end_time = ''
-                      this.t && clearInterval(this.t)
-                      this.getData(true)
-                    })
+                  this.image = d.data.url
                 }
               },
               fail: e => {
@@ -218,22 +224,6 @@ export default {
         .catch(err => {
           console.log("err",err);
         })
-        // this.end_time = DateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss')
-        // this.$post(`/api/v1/video/add`, {
-        //   start_time: this.start_time,
-        //   end_time: this.end_time
-        // }).then(r => {
-        //     this.isVideoing = false
-        //     this.start_time = ''
-        //     this.end_time = ''
-        //     this.t && clearInterval(this.t)
-        //     this.getData(true)
-        //   })
-      } else {
-        if (this.videoLoadingStatus != 100) {
-          this.$toast('摄像头加载中,请稍后')
-          return
-        }
         this.isVideoing = true
         this.start_time = DateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss')
         this.end_time = ''
