@@ -16,12 +16,13 @@ export default {
 					
 				})
 		}
-	},
-	onShow() {
-		// console.log('App Show')
-	},
-	onHide() {
-		// console.log('App Hide')
+
+		this.$get(`api/v1/index/accessToken`)
+			.then(r => {
+				if (r.data) {
+					this.$setStorage('ysToken', r.data)
+				}
+			})
 	},
 	computed: {
 		...mapState('user', ['openId'])

@@ -6,8 +6,13 @@
     </div>
     <!-- <div class="font16" style="color:#B41018;;margin-bottom:130rpx">您的生活补给站</div> -->
     
-    <button open-type="getUserInfo" class="reset"
-      @getuserinfo="onUserInfo"><div class="btn">微信一键登录</div></button>
+    <button class="reset" v-if="canIUseGetUserProfile" >
+      <div class="btn">微信一键登录</div>
+    </button>
+    <button v-else open-type="getUserInfo" class="reset" @getuserinfo="onUserInfo">
+      <div class="btn">微信一键登录</div>
+    </button>
+    
     <div class="font12" style="color:#929292;">登录／注册即视为您同意<span style="color:#049CE3;" @click.stop="">《服务条款》</span></div>
 
   </div>
@@ -18,6 +23,10 @@ import { mapState, mapActions} from 'vuex'
 
 export default {
   onLoad(opt) {
+    if (wx.getUserProfile) {
+      // this.canIUseGetUserProfile = true
+      console.log('user profile')
+    }
     this.getSessionKey()
       .then(r => {
         console.log('获取session_key success...')
@@ -28,6 +37,7 @@ export default {
       iv: '',
       token: '',
       citycode: '',
+      canIUseGetUserProfile: false,
     }
   },
   methods: {

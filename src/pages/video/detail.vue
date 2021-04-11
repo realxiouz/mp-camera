@@ -28,7 +28,7 @@ export default {
   methods: {
     getPlayUrl() {
       let data = {
-        'accessToken': 'at.59l4nssa0rnepbf1d4u2e750e0gh7oyl-9rhzd1qlv6-1s0hzdd-ehw1v9vcd',
+        'accessToken': this.$getStorage('ysToken'),
         'channelNo': 1,
         'deviceSerial': 'F72584666',
         'protocol': 3, // 流播放协议，1-ezopen、2-hls、3-rtmp

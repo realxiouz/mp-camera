@@ -148,7 +148,7 @@ Page({
   },
   onLoad(query){
     var launchOptions = wx.getLaunchOptionsSync();
-    const { accessToken = 'at.59l4nssa0rnepbf1d4u2e750e0gh7oyl-9rhzd1qlv6-1s0hzdd-ehw1v9vcd', deviceSerial = 'F72584666',channelNo = 1,scene } = query;
+    const { accessToken = wx.getStorageSync('ysToken'), deviceSerial = 'F72584666',channelNo = 1,scene } = query;
     console.log("scene",scene)
     this.setData({
       scene: parseInt(scene,10) || launchOptions.scene,
